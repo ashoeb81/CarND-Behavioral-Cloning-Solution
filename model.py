@@ -1,7 +1,7 @@
 """Build, Train, Evaluate, and Serialize Steering Angle Prediction Model.
 
 Usage:
-To train with data read from disk.
+To train with data read in batches from disk.
 python model.py --train_logs driving_log_train.csv --num_train 7698 \
                 --test_logs driving_log_test.csv --num_test 962 \
                 --validate_logs driving_log_validate.csv --num_validate 962 \
@@ -13,7 +13,6 @@ python model.py --train_logs driving_log_train.csv --num_train 7698 \
                 --in_memory True
 
 """
-
 import argparse
 import csv  
 import json
@@ -32,7 +31,7 @@ from sklearn.metrics import mean_squared_error
 def GetDataGenerator(driving_log_path):
     """Generator that returns images and their labels for model training and evaluation.
 
-    Generator resized input images to dimenstions (25x25x3) and only returns those images
+    Generator resizes input images to dimenstions (25x25x3) and only returns those images
     if associated steering angle != 0.
 
     Args:
@@ -88,7 +87,7 @@ def CreateModel(num_conv_layers, num_conv_kernels, kernel_dims, num_fc_layers, n
 
 
 
-def TrainModel(model, data_generator, samples_per_epoch=7698, nb_epoch=25, in_memory=True):
+def TrainModel(model, data_generator, samples_per_epoch=7698, nb_epoch=25, batch_size=32, in_memory=False):
     """Trains model on training data provided by a generator.
 
     Args:
@@ -96,21 +95,28 @@ def TrainModel(model, data_generator, samples_per_epoch=7698, nb_epoch=25, in_me
       data_generator: Generator of data and labels as returned by GetDataGenerator.
       samples_per_epoch: (integer) Number of training samples per training epoch. 
       nb_epoch: (integer) Number of training epochs.
-      in_memory: (boolean) If True, reads all data into memory prior to training.
+      in_memory: (boolean) If True, reads all data into memory prior to training else data is read
+        in batches from disk.
     Returns:
       Nothing, but modifies model object by calling model.fit_generator(...).  When in_memory=True,
       model object is modified by calling model.fit(...)
     """
     if in_memory:
+        # Read all of generators data into memory and then call model.fit(...)
         X, Y = zip(*[next(data_generator) for i in range(samples_per_epoch)])
-        model.fit(np.squeeze(np.array(X)),  np.array(Y), nb_epoch=nb_epoch, batch_size=32)
+        model.fit(np.squeeze(np.array(X)),  np.array(Y), nb_epoch=nb_epoch, batch_size=batch_size)
     else:
-        model.fit_generator(data_generator, samples_per_epoch=samples_per_epoch, nb_epoch=nb_epoch, pickle_safe=True,
-            nb_worker=4)
+        # Read data in batches from disk and pass each batch into model for training.
+        for epoch in range(nb_epoch):
+            for step in range(np.round(samples_per_epoch/float(batch_size)).astype(int)):
+                X_batch, Y_batch = zip(*[next(data_generator) for i in range(batch_size)])
+                loss = model.train_on_batch(np.squeeze(np.array(X_batch)),  np.array(Y_batch))
+                if (step % 10) == 0:
+                    print('Finished Step %d | Epoch %d | Loss %f' % (step, epoch, loss))
 
 
 
-def EvaluateModel(model, data_generator, num_samples, in_memory=True):
+def EvaluateModel(model, data_generator, num_samples, in_memory=False):
     """Evaluates model on test data provided by a generator.
 
     Args:
@@ -146,7 +152,7 @@ def SaveModel(model):
 def BuildSteeringAnglePredictor(train_logs, num_train_samples,
                                 test_logs, num_test_samples,
                                 validate_logs, num_validate_samples,
-                                in_memory=True):
+                                in_memory=False):
     """Build, Train, Evaluate, and Serialize Steering Angle Prediction Model.
 
 
