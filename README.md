@@ -28,6 +28,7 @@ Next, with the number of convolutional layers fixed to two, I evaluated the mode
 
 ![Screenshot](images/num_fc_layers_vs_mse.png)
 
+Based on the above results on the test set, I fixed the model architecture to use two convolutional layers and one fully-connected layer as illustrated above.
 
 ## Model Training and Evaluation
 
