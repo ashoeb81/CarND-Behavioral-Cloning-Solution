@@ -7,7 +7,9 @@ To generate the data used for this project, I drove the car around both tracks f
 
 The graph below illustrates a histogram of the recorded steering angles.  The histogram shows that a significant fractin of the steering angles are 0.  In fact, ~50% of the recorded frames are associated with a steering angle of zero.
 
-![Screenshot](images/data_histogram.png)
+<p align="center">
+  ![Screenshot](images/data_histogram.png)
+</p>
 
 
 These frames were **shuffled and split** into a training (7698 frames), testing (962 frames), and validation (962) sets.
