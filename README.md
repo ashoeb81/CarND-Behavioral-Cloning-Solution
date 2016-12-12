@@ -18,14 +18,19 @@ Specifically, my architecture (shown in the figure below) contains two successiv
 
 ![Screenshot](images/model_architecture_image.png)
 
-I arrived at this architecture through a greedy exploration process.  I first fixed the number of fully-connected layers and evaluted the model's test Mean-Squared-Error (MSE, see next section) as the number of convolutional layers increased form 1 to 3.  The plot below illustrates how the model's test MSE has a local minimum when using two convolutional layers.
+## Model Architecture Exploration
+
+I arrived at the model architecture described above through a greedy exploration process.  I first fixed the number of fully-connected layers to one and evaluted the model's Mean-Squared-Error (MSE) on the test set as the number of convolutional layers increased form 1 to 3.  The plot below illustrates how the model's test MSE has a local minimum when using two convolutional layers.
 
 ![Screenshot](images/num_conv_layers_vs_mse.png)
+
+Next, with the number of convolutional layers fixed to two, I evaluated the model's test MSE as the number of fully-connected layers increased form 1 to 3.  In this case, the figure below illustrates that the addition of more fully-connected layers worsents the test MSE.
+
+![Screenshot](images/num_fc_layers_vs_mse.png)
+
 
 ## Model Training and Evaluation
 
 The model was trained using the Mean-Squared-Error (MSE) objective and the Adam optimization algorithm.  The model was trained for 25 epochs where each epoch involves presenting all the training data to the algorithm in batches of size 32.  The model achieved an training MSE error of 0.043, a testing MSE of 0.061, and a validation MSE 0.069.  The figure below illustrates a scatter plot of the model's predicted steering angle against the actual steering angle for both the test and validation data sets.
 
 ![Screenshot](images/truth_vs_prediction.png)
-
-
