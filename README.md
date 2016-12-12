@@ -20,4 +20,4 @@ Since the steering angle is a continuous number between -1 and 1, I chose to con
 
 The model was trained using the Mean-Squared-Error (MSE) objective and the Adam optimization algorithm.  The model was trained for 25 epochs where each epoch involves presenting all the training data to the algorithm in batches of size 32.  The model achieved an training MSE error of 0.043, a testing MSE of 0.061, and a validation MSE 0.070.  The figure below illustrates a scatter plot of the model's predicted steering angle against the actual steering angle for both the test and validation data sets.
 
-![Screenshot](images/model_architecture.png)
+![Screenshot](images/truth_vs_prediction.png)
