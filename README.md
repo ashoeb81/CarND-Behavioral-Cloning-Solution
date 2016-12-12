@@ -17,7 +17,7 @@ Since the steering angle is a continuous number between -1 and 1, I chose to con
 
 More specifically, my architecture (shown in the figure below) contains two successive convolutional layers followed by one fully-connected layer. Each convolutional layer employs a ReLU activation function, and 2X2 max-pooling with a stride of 2 in each dimension. During training, the model is also regularized by using two drop-out layers each with a keep-probability of 30%.
 
-![Screenshot](images/model_architecture_image.png)
+![Screenshot](images/model_architecture_final_image.png)
 
 ## Model Architecture Exploration
 
