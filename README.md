@@ -6,9 +6,10 @@ To generate the data used for this project, I drove the car around both tracks f
 
 ![Screenshot](images/data_histogram.png)
 
-The recorded frames (9622 frames) were **shuffled and split** into a training (7698 frames), testing (962 frames), and validation (962) sets.  Furthermore, only frames with non-zero steering angles were used to train, test, and validate the model.  The distribution of the train, test, and validation datasets are shown below.
+The recorded frames (9622 frames) were **shuffled and split** into a training (7698 frames), testing (962 frames), and validation (962) sets.  Furthermore, only frames with non-zero steering angles were used to train, test, and validate the model.  Lastly, all image frames were reshaped to be smaller (25x25x3) so as to speed up the training process (since convolution is O(N^2) operation).  The distribution of the steering angles in the train, test, and validation datasets are shown below.  
 
 ![Screenshot](images/train_test_validate_histogram.png)
+
 
 ## Model Architecture
 
