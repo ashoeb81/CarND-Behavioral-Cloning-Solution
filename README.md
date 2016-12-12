@@ -16,12 +16,16 @@ Since the steering angle is a continuous number between -1 and 1, I chose to con
 
 Specifically, my architecture (shown in the figure below) contains two successive convolutional layers followed by one fully-connected layer. Each convolutional layer employs a ReLU activation function, and 2X2 max-pooling with a stride of 2 in each dimension. During training, the model is also regularized by using two drop-out layers each with a keep-probability of 30%.
 
-![Screenshot](images/model_architecture.png)
+![Screenshot](images/model_architecture_image.png)
 
-I arrived at this architecture through a greedy exploration process.  I first fixed the number of fully-connected layers 
+I arrived at this architecture through a greedy exploration process.  I first fixed the number of fully-connected layers and evaluted the model's test Mean-Squared-Error (MSE, see next section) as the number of convolutional layers increased form 1 to 3.  The plot below illustrates how the model's test MSE has a local minimum when using two convolutional layers.
+
+![Screenshot](images/num_conv_layers_vs_mse.png)
 
 ## Model Training and Evaluation
 
 The model was trained using the Mean-Squared-Error (MSE) objective and the Adam optimization algorithm.  The model was trained for 25 epochs where each epoch involves presenting all the training data to the algorithm in batches of size 32.  The model achieved an training MSE error of 0.043, a testing MSE of 0.061, and a validation MSE 0.069.  The figure below illustrates a scatter plot of the model's predicted steering angle against the actual steering angle for both the test and validation data sets.
 
 ![Screenshot](images/truth_vs_prediction.png)
+
+
