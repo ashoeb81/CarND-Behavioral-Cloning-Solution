@@ -14,7 +14,7 @@ The recorded frames (9622 frames) were **shuffled and split** into a training (7
 
 Since the steering angle is a continuous number between -1 and 1, I chose to construct a convolutional neural network that performs regression from the input image frame (dimensions 25x25x3) to the steering angle (a continuous number).  My convolutional neural network uses an architecture that progressively transforms the input from a representation that is "wide and shallow" (e.g. input is 25 X 25 X 3 which is large in height and width relative to depth) to a representation that is "narrow and deep" (e.g. the output of my last convolutional layer is 6 X 6 X 16 which has greater depth than width and height). Each additional depth dimension is a learned feature map that helps the network solve the regression task. 
 
-Specifically, my architecture (shown in the figure below) contains two successive convolutional layers followed by two fully-connected layers. Each convolutional layer employs a ReLU activation function, and 2X2 max-pooling with a stride of 2 in each dimension. During training, the model is regularized by using two drop-out each with a keep-probability of 30%.
+Specifically, my architecture (shown in the figure below) contains two successive convolutional layers followed by two fully-connected layers. Each convolutional layer employs a ReLU activation function, and 2X2 max-pooling with a stride of 2 in each dimension. During training, the model is regularized by using two drop-out layers each with a keep-probability of 30%.
 
 ![Screenshot](images/model_architecture.png)
 
