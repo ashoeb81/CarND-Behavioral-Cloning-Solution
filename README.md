@@ -32,6 +32,6 @@ Based on the above results on the test set, I fixed the model architecture to us
 
 ## Model Training and Evaluation
 
-The model was trained using the Mean-Squared-Error (MSE) objective and the Adam optimization algorithm.  The model was trained for 25 epochs where each epoch involves presenting all the training data to the algorithm in batches of size 32.  The model achieved an training MSE error of 0.043, a testing MSE of 0.061, and a validation MSE 0.069.  The figure below illustrates a scatter plot of the model's predicted steering angle against the actual steering angle for both the test and validation data sets.
+The model was trained using the Mean-Squared-Error (MSE) objective and the Adam optimization algorithm.  The MSE is a suitable objective for a regression task and the Adam optimizer adapts the learning rate and employs momentum both of which promote model convergence.  The model was trained for 25 epochs where each epoch involves presenting all the training data to the algorithm in batches of size 32.  The model achieved an training MSE error of 0.043, a testing MSE of 0.061, and a validation MSE 0.069.  The relative closeness of the test and validtion MSE values suggest we did not overfit to the test while exploring model architectures.  The figure below illustrates a scatter plot of the model's predicted steering angle against the actual steering angle for both the test and validation data sets.
 
 ![Screenshot](images/truth_vs_prediction.png)
